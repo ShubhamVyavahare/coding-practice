@@ -1,6 +1,11 @@
 package scenariobased.demo1;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -31,16 +36,13 @@ public class Demo1 {
 
         // Program to print max salary of an emp from each dept
         Map<Integer, Employee> employeeMap = employeeList.stream()
-                .collect(Collectors
-                        .groupingBy(employee -> employee.getDeptId(),
-                                Collectors.collectingAndThen(Collectors.
-                                        maxBy(Comparator.comparingInt(Employee::getSalary)), Optional::get)));
+                .collect(Collectors.toMap(Employee::getDeptId, Function.identity(), BinaryOperator.maxBy(Comparator.comparingInt(Employee::getSalary))));
         employeeMap.forEach((integer, employee) -> System.out.println("Dept : " + integer + " --> " + "Max Emp Salary : " + employee.getSalary()));
 
         Map<Integer, List<Employee>> collect = employeeList.stream()
-                .collect(Collectors.groupingBy(employee -> employee.getDeptId()));
-        collect.forEach((integer, employees) -> {
-            System.out.println("Dept : " + integer);
+                .collect(Collectors.groupingBy(Employee::getDeptId));
+        collect.forEach((dept, employees) -> {
+            System.out.println("Dept : " + dept);
             employees.stream().max(Comparator.comparing(Employee::getSalary)).ifPresent(employee -> System.out.println("Max Emp Salary : " + employee.getSalary()));
         });
 
@@ -55,9 +57,7 @@ public class Demo1 {
         Map<Integer, List<Employee>> collect1 = employeeList.stream().collect(Collectors.groupingBy(Employee::getDeptId));
         collect1.forEach((integer, employees) -> {
             System.out.println("Dept : " + integer);
-            employees.forEach(employee -> {
-                System.out.println(employee.toString());
-            });
+            employees.forEach(employee -> System.out.println(employee.toString()));
         });
 
         // Program to print emps count working in each dept
