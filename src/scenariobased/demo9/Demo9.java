@@ -29,7 +29,7 @@ public class Demo9 {
                 new Emp("Ram", 1200000, "Mumbai"),
                 new Emp("Akash", 1500000, "Nashik"));
 
-        // Given and empList. sort employees based on their salaries in desc order
+        // Given an empList. sort employees based on their salaries in desc order
         System.out.println("----- Given and empList. sort employees based on their salaries in desc order ------");
         empList.stream()
                 .sorted((o1, o2) -> o2.getSalary().compareTo(o1.getSalary()))

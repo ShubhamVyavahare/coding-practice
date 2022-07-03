@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 public class Demo7 {
     public static void main(String[] args) {
         List<String> nameList = Arrays.asList("Shubham", "Vaibhav", "Ashish", "Yash", "Ram", "Ram", "Shubham");
-        Set<String> uniqueNameSet = new HashSet<>();
 
         Map<String, Long> nameVsCountMap = nameList.stream()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
