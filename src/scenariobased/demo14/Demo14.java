@@ -10,12 +10,21 @@ import java.util.List;
  * output should be : dddpppppppeeeeeeeeeee
  * <p>
  * Output :
- * dddpppppppeeeeeeeeeee
+ * ------------------ Method 1 ------------------
+ * dddpppppppeeeeeeeeeeeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+ * ------------------ Method 2 ------------------
+ * dddpppppppeeeeeeeeeeeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
  */
 public class Demo14 {
     public static void main(String[] args) {
-        String input = "3d7p11e";
+        String input = "3d7p11e101a";
+        System.out.println("------------------ Method 1 ------------------");
+        method1(input);
+        System.out.println("\n------------------ Method 2 ------------------");
+        method2(input);
+    }
 
+    private static void method1(String input) {
         String[] countArr = input.split("[a-zA-Z]");
         List<String> countList = Arrays.asList(countArr);
         List<Integer> countListInteger = countList
@@ -36,6 +45,24 @@ public class Demo14 {
                 System.out.print(character);
             }
         }
+    }
 
+    public static void method2(String input) {
+
+        int num = 0;
+
+        for (int i = 0; i < input.length(); i++) {
+
+            char c = input.charAt(i);
+
+            if (Character.isDigit(c)) {
+                num = (num * 10) + Character.getNumericValue(c);
+            } else {
+                for (int j = 0; j < num; j++) {
+                    System.out.print(c);
+                }
+                num = 0;
+            }
+        }
     }
 }
