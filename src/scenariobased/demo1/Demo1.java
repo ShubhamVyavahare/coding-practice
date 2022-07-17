@@ -1,9 +1,6 @@
 package scenariobased.demo1;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -35,16 +32,25 @@ public class Demo1 {
         employeeList.stream().mapToInt(Employee::getSalary).min().ifPresent(System.out::println);
 
         // Program to print max salary of an emp from each dept
+        //solution 1
         Map<Integer, Employee> employeeMap = employeeList.stream()
                 .collect(Collectors.toMap(Employee::getDeptId, Function.identity(), BinaryOperator.maxBy(Comparator.comparingInt(Employee::getSalary))));
         employeeMap.forEach((integer, employee) -> System.out.println("Dept : " + integer + " --> " + "Max Emp Salary : " + employee.getSalary()));
 
+        //solution 2
         Map<Integer, List<Employee>> collect = employeeList.stream()
                 .collect(Collectors.groupingBy(Employee::getDeptId));
         collect.forEach((dept, employees) -> {
             System.out.println("Dept : " + dept);
             employees.stream().max(Comparator.comparing(Employee::getSalary)).ifPresent(employee -> System.out.println("Max Emp Salary : " + employee.getSalary()));
         });
+
+        //solution 3
+        Map<Integer, Optional<Employee>> collect2 = employeeList.stream()
+                .collect(Collectors
+                        .groupingBy(Employee::getDeptId, Collectors
+                                .reducing(BinaryOperator.maxBy(Comparator.comparing(Employee::getSalary)))));
+        System.out.println(collect2);
 
         // Program to print active and inactive emps from each dept
         employeeList.stream()
