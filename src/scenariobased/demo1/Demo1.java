@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 /**
  * Given List<Employee> has id, salary, deptid,status
- *
+ * <p>
  * Program to print Max emp salary from given collection
  * Program to print Min emp salary from given collection
  * Program to print max salary of an emp from each dept
@@ -51,6 +51,14 @@ public class Demo1 {
                         .groupingBy(Employee::getDeptId, Collectors
                                 .reducing(BinaryOperator.maxBy(Comparator.comparing(Employee::getSalary)))));
         System.out.println(collect2);
+
+        //solution 4
+        Map<Integer, Employee> collect4 = employeeList.stream()
+                .collect(Collectors
+                        .groupingBy(Employee::getDeptId,
+                                Collectors.collectingAndThen(Collectors.maxBy(Comparator.comparing(Employee::getSalary)), Optional::get))
+                );
+        System.out.println(collect4);
 
         // Program to print active and inactive emps from each dept
         employeeList.stream()
